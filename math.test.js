@@ -1,19 +1,48 @@
-import { multiply } from './math.js';
+import { multiply, divide, sum } from './math.js';
 
 describe('multiply', () => {
-  test('positive * positive', () => {
-    expect(multiply(2, 3)).toBe(6);
-  });
+  it.each([
+    { inputA: 2, inputB: 3, expected: 6 },
+    { inputA: 6, inputB: 3, expected: 18 },
+    { inputA: -2, inputB: -3, expected: 6 },
+    { inputA: -2, inputB: 3, expected: -6 },
+    { inputA: 0, inputB: 5, expected: 0 },
+  ])(
+    'multiplies $inputA * $inputB to equal $expected',
+    ({ inputA, inputB, expected }) => {
+      expect(multiply(inputA, inputB)).toBe(expected);
+    }
+  );
+});
 
-  test('negative * negative', () => {
-    expect(multiply(-2, -3)).toBe(6);
-  });
+describe('divide', () => {
+  it.each([
+    { inputA: 10, inputB: 2, expected: 5 },
+    { inputA: -10, inputB: -2, expected: 5 },
+    { inputA: -10, inputB: 2, expected: -5 },
+    { inputA: 0, inputB: 5, expected: 0 },
+  ])(
+    'divides $inputA / $inputB to equal $expected',
+    ({ inputA, inputB, expected }) => {
+      expect(divide(inputA, inputB)).toBe(expected);
+    }
+  );
 
-  test('negative * positive', () => {
-    expect(multiply(-2, 3)).toBe(-6);
+  test('throws error when dividing by zero', () => {
+    expect(() => divide(10, 0)).toThrow('Cannot divide by zero');
   });
+});
 
-  test('zero multiplication', () => {
-    expect(multiply(0, 5)).toBe(0);
-  });
+describe('sum', () => {
+  it.each([
+    { inputA: 1, inputB: 2, expected: 3 },
+    { inputA: -1, inputB: -2, expected: -3 },
+    { inputA: -1, inputB: 2, expected: 1 },
+    { inputA: 0, inputB: 5, expected: 5 },
+  ])(
+    'adds $inputA + $inputB to equal $expected',
+    ({ inputA, inputB, expected }) => {
+      expect(sum(inputA, inputB)).toBe(expected);
+    }
+  );
 });
